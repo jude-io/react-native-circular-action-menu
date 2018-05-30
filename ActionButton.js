@@ -63,7 +63,14 @@ export default class ActionButton extends Component {
     }];
   }
   getActionsStyle() {
-    return [this.getButtonSize()];
+    return {
+      width: this.props.size,
+      height: this.props.size + 10,
+    };
+  }
+
+  getCustomStyle() {
+    return this.props.style ? this.props.style : {};
   }
 
   getButtonSize() {
@@ -102,7 +109,7 @@ export default class ActionButton extends Component {
   renderButton() {
     return (
       <View
-        style={this.getActionButtonStyle()}
+        style={this.getActionButtonStyle(), { height: this.props.size + 10, minHeight: this.props.size + 10, maxHeight: this.props.size + 10 }}
       >
         <TouchableOpacity
           activeOpacity={0.85}
@@ -113,6 +120,7 @@ export default class ActionButton extends Component {
                 this.animateButton();
               }
             }}
+          style={{ height: this.props.size + 10, flex: 1 }}
         >
           <Animated.View
             style={
@@ -139,7 +147,9 @@ export default class ActionButton extends Component {
                         outputRange: ['0deg', this.props.degrees + 'deg']
                       }),
                     }],
-                }]}>
+                },
+                this.getCustomStyle()
+              ]}>
             {this.renderButtonIcon()}
           </Animated.View>
         </TouchableOpacity>
